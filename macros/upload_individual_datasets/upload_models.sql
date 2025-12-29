@@ -40,11 +40,7 @@
                 '{{ tojson(model_copy.tags) }}', {# tags #}
                 '{{ tojson(model_copy.config.meta) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"') }}', {# meta #}
                 '{{ model_copy.alias }}', {# alias #}
-                {% if var('dbt_artifacts_exclude_all_results', false) %}
-                    null
-                {% else %}
-                    '{{ tojson(model_copy) | replace("\\", "\\\\") | replace("'","\\'") | replace('"', '\\"') }}' {# all_results #}
-                {% endif %}
+                null {# all_results excluded to reduce payload size #}
             )
             {%- if not loop.last %},{%- endif %}
         {%- endfor %}
